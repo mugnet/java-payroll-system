@@ -1,0 +1,10 @@
+APP_NAME="Payroll System"
+
+DB_DRIVER=jdbc:mysql://
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=java_payroll
+DB_USERNAME=root
+DB_PASSWORD=admin1234
+  
+USER_ROLE_DEFAULT=2 
