@@ -15,6 +15,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
+import payroll_system.Alert;
 import payroll_system.Assets;
 import payroll_system.Base;
 import payroll_system.Database;
@@ -62,6 +63,9 @@ public class LoginForm extends AuthService {
 	 * Create the frame.
 	 */
 	public LoginForm() {
+		
+		Alert alert = new Alert();
+		
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setResizable(false);
 		setBackground(new Color(254, 248, 249));
@@ -105,8 +109,10 @@ public class LoginForm extends AuthService {
 			 if(isEmployee == 2) {
 				
 				 FormHelper.show(new DashboardEmp(),true);
-			 }else {
+			 }else if(isEmployee ==1) {
 				 FormHelper.show(new DashboardHr(),true);
+			 }else {
+				 alert.setMessage("We could not found any details from your input. Please try again!");
 			 }
 			 
 			}

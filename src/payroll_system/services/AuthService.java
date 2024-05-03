@@ -7,10 +7,13 @@ import java.sql.SQLException;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
+import payroll_system.Alert;
 import payroll_system.Database;
 
 public class AuthService extends Database {
 
+	
+	
 public int loginUser(String email,JPasswordField userPassword) { 
 
 	
@@ -35,17 +38,23 @@ public int loginUser(String email,JPasswordField userPassword) {
 //    	 
      
     	 
+    	return resultSet.getInt("user_type_id");
     	 
-    	 return resultSet.getInt("user_type_id");
          
      } else {
-    	 System.out.println("Invalid username or password.");
+    	 Alert alert = new Alert();
+ 		
+ 		
+ 		alert.setMessage("Invalid username or password. Please try again!");
+ 		alert.danger();
+ 		
+ 		dbClose(resultSet, statement);
+ 		return 0;
   
          
      }
      
-     resultSet.close();
-     statement.close();
+    
     
     
     

@@ -58,6 +58,12 @@ try  {
 		  
 	  }
 	  
+	  
+	  public void dbClose(ResultSet resultSet, PreparedStatement statement) throws SQLException {
+		  	resultSet.close();
+		    statement.close();
+	  }
+	  
 	 
  
 	  
