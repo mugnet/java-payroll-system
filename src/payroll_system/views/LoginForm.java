@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 import java.awt.CardLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import java.awt.*;
@@ -65,36 +67,41 @@ public class LoginForm extends AuthService {
 	public LoginForm() {
 		
 		Alert alert = new Alert();
-		
-		setExtendedState(Frame.MAXIMIZED_BOTH);
-		setResizable(false);
-		setBackground(new Color(254, 248, 249));
-		 
 		Assets asset  = new Assets();
 		
+		
+		setSize(550,400);
+		setResizable(false);
+		setBackground(new Color(254, 248, 249));
+		setLocationRelativeTo(null);	
 		setName("loginForm");
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		getContentPane().setLayout(null);
 		
 		JTextArea txtUsername = new JTextArea();
-		txtUsername.setToolTipText("Enter username");
-		txtUsername.setBounds(119, 131, 300, 34);
+		txtUsername.setToolTipText("Enter username"); 
+		 
+		setComponent(txtUsername);
+		padding(9,5,5,15);
+		bounds(117, 111, 300, 34);
+		
 		getContentPane().add(txtUsername);
 		
 		JLabel lblPassword = new JLabel("Username");
-		lblPassword.setBounds(119, 111, 82, 16);
+		lblPassword.setBounds(117, 91, 82, 16);
 		getContentPane().add(lblPassword);
 		
 		JLabel lblPassword_2 = new JLabel("Password");
-		lblPassword_2.setBounds(119, 187, 82, 16);
+		lblPassword_2.setBounds(117, 167, 82, 16);
 		getContentPane().add(lblPassword_2);
-		
 		
 
 		txtPassword = new JPasswordField();
-		txtPassword.setBounds(119, 200, 300, 40);
+		txtPassword.setBounds(117, 180, 300, 40);
 		getContentPane().add(txtPassword);
+		
 		
 		
 		JButton btnLogin = new JButton("Login");
@@ -112,12 +119,12 @@ public class LoginForm extends AuthService {
 			 }else if(isEmployee ==1) {
 				 FormHelper.show(new DashboardHr(),true);
 			 }else {
-				 alert.setMessage("We could not found any details from your input. Please try again!");
+				 alert.setMessage("We could not found any details from your entry. Please try again!");
 			 }
 			 
 			}
 		});
-		btnLogin.setBounds(119, 257, 300, 42);
+		btnLogin.setBounds(117, 237, 300, 42);
 		getContentPane().add(btnLogin);
 		
 		 

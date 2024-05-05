@@ -18,7 +18,7 @@ import java.util.Properties;
 
 import javax.swing.JFrame;
 
-public class Config  extends JFrame{
+public class Config  extends AppFrame{
 	
 	public String baseDir =  System.getProperty("user.dir");
 	
@@ -60,6 +60,8 @@ public class Config  extends JFrame{
 	 }
 	 
 	 
+	 
+	
 	 
 	
 	 

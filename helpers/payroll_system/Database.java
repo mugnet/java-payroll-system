@@ -36,6 +36,24 @@ try  {
 	        } 
 	
 	  }
+	 
+	  public PreparedStatement query(String sql) {
+			 
+		  try  {
+		     PreparedStatement statement = this.con.prepareStatement(sql);
+		     
+		    
+		    return statement; 
+		      
+		     
+		  } catch (SQLException e) {
+	            System.err.println("Connection failed!");
+	            e.printStackTrace();
+	        }
+		return null; 
+		    
+		  
+	  }
 	  
 	  public PreparedStatement query(String sql, String[] fields) {
 		 

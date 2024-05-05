@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Frame;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 
 public class DashboardEmp extends JFrame {
 
@@ -35,14 +36,27 @@ public class DashboardEmp extends JFrame {
 	public DashboardEmp() {
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 542, 367);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Employee");
+		JButton btnNewButton = new JButton("Logout");
+		btnNewButton.setBounds(448, 6, 88, 42);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Logout");
+		btnNewButton_1.setBounds(348, 6, 88, 42);
+		contentPane.add(btnNewButton_1);
+		
+		JLabel lblNewLabel = new JLabel("Employee Portal | ");
+		lblNewLabel.setBounds(16, 18, 114, 16);
 		contentPane.add(lblNewLabel);
+		
+		JLabel lblUserName = new JLabel("--");
+		lblUserName.setBounds(130, 18, 114, 16);
+		contentPane.add(lblUserName);
 	}
-
 }

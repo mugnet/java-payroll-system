@@ -21,7 +21,8 @@ public class Assets extends Base {
 		 Image image = icon.getImage();
 	        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-	        jlabel.setIcon(scaledIcon); 
+	        jlabel.setIcon(scaledIcon);
+	        jlabel.setText(null);
 		
 	}
 	
