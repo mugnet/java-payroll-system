@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
-public class Table {
+public class TableHelper {
 	
 	private DefaultTableModel model;
 	private String[] Headers;
@@ -61,13 +61,14 @@ public class Table {
 	}
 	
 	static class RowBorderRenderer extends DefaultTableCellRenderer {
+		
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
  
             if (row == 0 || row == table.getRowCount() - 1) {
-                Border border = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.lightGray);  
-                ((JComponent) component).setBorder(border);
+                Border border = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY);  
+                ((JComponent) component).setBorder(border); 
             } else {
                 ((JComponent) component).setBorder(null);  
             }

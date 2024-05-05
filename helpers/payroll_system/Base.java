@@ -17,7 +17,7 @@ public class Base extends Config{
 	
 	public String basePath(String file_path) { //file path must be separated by a dot (.)
 		
-		return this.basePath() +  file_path.replace('.', '/');
+		return this.basePath() +  file_path;
 		
 	}
 	
@@ -34,7 +34,7 @@ public class Base extends Config{
 	}
 	
 	public String strDelimeter(String value) {
-		return  this.basePath()+ value.replace('.', '/');
+		return  this.basePath()+ value;
 	}
 	
 	
