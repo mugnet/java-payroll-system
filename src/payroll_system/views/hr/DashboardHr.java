@@ -396,8 +396,7 @@ public class DashboardHr extends Base {
 				iFDepartment.setVisible(false);
 				iFDeduction.setVisible(false);
 				iFUsers.setVisible(false);
-
-				
+			
 
 				 scrollPane = new JScrollPane(ps.get());
 				iFPosition.getContentPane().add(scrollPane, BorderLayout.CENTER);

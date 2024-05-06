@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import payroll_system.Alert;
 import payroll_system.Base;
+import payroll_system.Database;
 import payroll_system.services.PositionService;
 import payroll_system.services.UserService;
 
@@ -28,9 +30,26 @@ public class frmUser extends Base {
 	private JPanel contentPane;
 	private JTextField txtName;
 	private JTextField txtEmail;
+	
+	private UserService us;
+	private String frmState;
+	private Database DB;
+	private Alert alert;
+	
+	private Object toUpdateId;
 
-	 
- 
+	/**
+	 * Launch the application.
+	 */
+
+	public Object getToUpdateId() {
+		return toUpdateId;
+	}
+
+	public void setToUpdateId(Object toUpdateId) {
+		this.toUpdateId = toUpdateId;
+	}
+	  
 	public frmUser(String title, String state, UserService ps) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,6 +108,11 @@ public class frmUser extends Base {
 		contentPane.add(separator);
 		
 		JButton btnNewButton = new JButton("SAVE");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setBounds(343, 248, 117, 39);
 		contentPane.add(btnNewButton);
 		
