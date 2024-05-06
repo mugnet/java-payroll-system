@@ -14,6 +14,7 @@ public class Assets extends Base {
 
 	private  final  String DIR = "assets/";
 	
+	
 	public Assets() {
 	  assets("");	
 	}
@@ -34,26 +35,6 @@ public class Assets extends Base {
 	}
 	
 	
-	public JButton configButton(String name,String filename) {
-		 
-		
-		JButton button = new JButton(name,new ImageIcon(basePath() + DIR + filename));
- 		
-		button.setVerticalTextPosition(SwingConstants.BOTTOM);
-		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		button.setMargin(new Insets(5, 10, 5,10));
-		button.addActionListener(new ButtonClickListener());
-		
-		return button;
-	}
 	
-	static class ButtonClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // Get the action command of the button that triggered the event
-            String buttonName = e.getActionCommand();
-            System.out.println("Button clicked: " + buttonName);
-        }
-    }
 	
 }

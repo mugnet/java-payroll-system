@@ -41,4 +41,13 @@ public void info() {
 	JOptionPane.showMessageDialog(null, message,"Info",JOptionPane.INFORMATION_MESSAGE);
 }
  
+public int question()  {
+	
+	  int choice = JOptionPane.showConfirmDialog(null, this.getMessage(), "Confirmation", JOptionPane.YES_NO_OPTION);
+      
+	  return choice;
+
+}
+
+
 }

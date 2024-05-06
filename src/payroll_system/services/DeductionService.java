@@ -3,8 +3,6 @@ package payroll_system.services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.Instant;
 
 import javax.swing.JTable;
 
@@ -12,21 +10,28 @@ import payroll_system.Alert;
 import payroll_system.Database;
 import payroll_system.TableHelper;
 
-public class UserService extends TableHelper {
+public class DeductionService extends TableHelper {
 
 	private Database DB;
 	private Alert alert;
 	private String name;
-	private String email;
-	private String userType;
+
 	
+	 
 	
+	public String getName() {
+		return name;
+	}
 
-	private final String db_table = "users";
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	private String[] headers = { "#", "Name","Email","User Type", "Registered At", "Updated At" };
+	private final String db_table = "deductions";
 
-	public UserService() {
+	private String[] headers = { "#", "Name", "Created At", "Updated At" };
+
+	public DeductionService() {
 		
 		alert = new Alert();
 		setHeaders(headers);
@@ -39,17 +44,15 @@ public class UserService extends TableHelper {
 
 		try {
 			DB = new Database();
-			PreparedStatement statement = DB.query("SELECT users.*, user_types.name FROM " + this.db_table + " INNER JOIN user_types ON users.user_type_id = user_types.id");
+			PreparedStatement statement = DB.query("SELECT * FROM " + this.db_table);
 			ResultSet resultSet = statement.executeQuery();
 			 
 			while (resultSet.next()) {
 				 getModel().addRow(new Object[] {
-						resultSet.getString("users.id"),
-						resultSet.getString("users.name"),
-						resultSet.getString("users.email"),
-						resultSet.getString("user_types.name"),
-						resultSet.getString("users.created_at"),
-						resultSet.getString("users.updated_at")
+						resultSet.getString("id"),
+						resultSet.getString("name"),
+						resultSet.getString("created_at"),
+						resultSet.getString("updated_at")
 				});
 				  
 
@@ -71,15 +74,13 @@ public class UserService extends TableHelper {
 		System.out.println("testing " + id);
 		try {
 			DB = new Database();
-			PreparedStatement statement = DB.first("SELECT users.*, user_types.name FROM " + this.db_table + " INNER JOIN user_types ON users.user_type_id = user_types.id where id = ?",id);
+			PreparedStatement statement = DB.first("SELECT * FROM " + this.db_table + " where id = ?",id);
 			
 			
 			ResultSet resultSet = statement.executeQuery();
  			
 			 if (resultSet.next()) { 
-	            this.setName(resultSet.getString("name"));
-	            this.setEmail(resultSet.getString("email"));
-	            this.setUserType(resultSet.getString("user_type_id")); 
+	            this.setName(resultSet.getString("name")); 
 	         } else {
 	            alert.setMessage("No data is found!");
 	            alert.danger();
@@ -104,7 +105,7 @@ public class UserService extends TableHelper {
 		
 		try {
 			DB = new Database();
-			PreparedStatement statement = DB.create("INSERT INTO " + this.db_table + " (name,email,user_type_id,created_at) VALUES (?)", fields);
+			PreparedStatement statement = DB.create("INSERT INTO " + this.db_table + " (name) VALUES (?)", fields);
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
@@ -125,17 +126,12 @@ public class UserService extends TableHelper {
 
 	public void update(String[] fields, Object idToUpdate) {
 		try {
-			
-			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 			DB = new Database();
-			PreparedStatement statement = DB.update("UPDATE " + this.db_table + " SET name = ?, email = ?, user_type_id = ?, created_at = ? WHERE id = ?", fields,
+			PreparedStatement statement = DB.update("UPDATE " + this.db_table + " SET name = ? WHERE id = ?", fields,
 					idToUpdate);
-			int i;
-			for(i = 0; i<=fields.length -1; i++) {
-				statement.setString(i+1, fields[i]);
-			}
-			statement.setTimestamp(fields.length, timestamp);
-			statement.setObject(fields.length + 1,idToUpdate);
+			
+			statement.setString(1, fields[0]);
+			statement.setObject(2,idToUpdate);
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
@@ -183,33 +179,5 @@ public class UserService extends TableHelper {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-	}
-	
-	
-	
-	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
-	 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 }

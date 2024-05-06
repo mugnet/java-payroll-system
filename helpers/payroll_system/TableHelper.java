@@ -8,6 +8,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -17,7 +19,24 @@ public class TableHelper {
 	
 	private DefaultTableModel model;
 	private String[] Headers;
+	private Object selectedId;
 	
+ 
+
+
+
+	public Object getSelectedId() {
+		return selectedId;
+	}
+
+
+
+	public void setSelectedId(Object selectedId) {
+		this.selectedId = selectedId;
+	}
+
+
+
 	public String[] getHeaders() {
 		
 		model = new DefaultTableModel();
@@ -56,6 +75,24 @@ public class TableHelper {
       
         JTableHeader header = table.getTableHeader();
         header.setDefaultRenderer(new PaddedHeaderRenderer(header.getDefaultRenderer()));
+        
+        
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1) {
+                        Object id = model.getValueAt(selectedRow, 0);
+//                        Object name = model.getValueAt(selectedRow, 1); 
+                        setSelectedId(id);
+                        
+                        
+                         
+                    }
+                }
+            }
+        });
         
         return table;
 	}
