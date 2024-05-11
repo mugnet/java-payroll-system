@@ -33,6 +33,16 @@ public class frmDeduction extends Base {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTextField txtName;
+	public JTextField txtAmount;
+	
+	public JTextField getTxtAmount() {
+		return txtAmount;
+	}
+
+	public void setTxtAmount(JTextField txtAmount) {
+		this.txtAmount = txtAmount;
+	}
+
 	private DepartmentService ds;
  
 	private String frmState;
@@ -66,8 +76,8 @@ public class frmDeduction extends Base {
 
 		setResizable(false);
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 385, 202);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 385, 252);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,6 +94,17 @@ public class frmDeduction extends Base {
 		txtName.setBounds(63, 65, 313, 36);
 		contentPane.add(txtName);
 		txtName.setColumns(10);
+		
+		
+		JLabel lblNewLabelAmount = new JLabel("Amount");
+		lblNewLabelAmount.setBounds(16, 103, 61, 16);
+		contentPane.add(lblNewLabelAmount);
+
+		txtAmount = new JTextField();
+		txtAmount.setToolTipText("Enter deduction amount");
+		txtAmount.setBounds(63, 99, 313, 36);
+		contentPane.add(txtAmount);
+		txtAmount.setColumns(10);
 
 		 
 		
@@ -128,7 +149,7 @@ public class frmDeduction extends Base {
 
 			}
 		});
-		btnSubmit.setBounds(274, 129, 102, 36);
+		btnSubmit.setBounds(274, 179, 102, 36);
 		contentPane.add(btnSubmit);
 
 		JPanel panel = new JPanel();
@@ -148,15 +169,15 @@ public class frmDeduction extends Base {
 				setVisible(false);
 			}
 		});
-		btnCancel.setBounds(170, 129, 102, 36);
+		btnCancel.setBounds(170, 179, 102, 36);
 		contentPane.add(btnCancel);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 115, 394, 0);
+		separator.setBounds(0, 159, 394, 0);
 		contentPane.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(0, 116, 394, 14);
+		separator_1.setBounds(0, 159, 394, 14);
 		contentPane.add(separator_1);
 	}
 }

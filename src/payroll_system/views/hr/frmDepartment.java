@@ -32,6 +32,15 @@ public class frmDepartment extends Base {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTextField txtName;
+	public JTextField getTxtAmount() {
+		return txtAmount;
+	}
+
+	public void setTxtAmount(JTextField txtAmount) {
+		this.txtAmount = txtAmount;
+	}
+
+	public JTextField txtAmount;
 	private DepartmentService ds;
  
 	private String frmState;
@@ -65,7 +74,7 @@ public class frmDepartment extends Base {
 
 		setResizable(false);
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 385, 202);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();

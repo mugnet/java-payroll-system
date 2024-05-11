@@ -3,7 +3,10 @@ package payroll_system.services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 
 import payroll_system.Alert;
@@ -15,10 +18,10 @@ public class PositionService extends TableHelper {
 	private Database DB;
 	private Alert alert;
 	private String name;
-
-	
+	 
 	 
 	
+	 
 	public String getName() {
 		return name;
 	}
@@ -37,6 +40,40 @@ public class PositionService extends TableHelper {
 		setHeaders(headers);
 	}
 
+	
+	
+	public void getData(JComboBox<String> cbo, String sql) {
+		 
+		try {
+			DB = new Database();
+			PreparedStatement statement = DB.query(sql);
+			ResultSet resultSet = statement.executeQuery();
+			 
+			 Map<Integer, String> dataMap = new HashMap<>();
+			 
+ 
+            while (resultSet.next()) {
+            	int id = resultSet.getInt("id");
+                String value = resultSet.getString("name"); 
+                dataMap.put(id, value);
+                
+            }
+            
+            for (Map.Entry<Integer, String> entry : dataMap.entrySet()) {
+                cbo.addItem(entry.getValue());
+            }
+                        
+            DB.dbClose(resultSet, statement);
+ 			   
+			 
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	 
+		 
+	}
+	
+	
 	public JTable get() {
 		
 		getHeaders();

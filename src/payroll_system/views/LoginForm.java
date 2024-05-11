@@ -23,7 +23,7 @@ import payroll_system.Base;
 import payroll_system.Database;
 import payroll_system.FormHelper;
 import payroll_system.services.AuthService;
-import payroll_system.views.employee.DashboardEmp;
+
 import payroll_system.views.hr.DashboardHr;
 
 import java.awt.FlowLayout;
@@ -33,33 +33,21 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.io.ObjectInputFilter.Config;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class LoginForm extends AuthService {
 
 	private static final long serialVersionUID = 1L;
 	private JPasswordField txtPassword;
+	private JTextField txtUsername;
 	
 
 	/**
 	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginForm frame = new LoginForm();
-					frame.setVisible(true); 
-				 
-				 
-				 
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	 
 
 	/**
 	 * Create the frame.
@@ -70,7 +58,7 @@ public class LoginForm extends AuthService {
 		Assets asset  = new Assets();
 		
 		
-		setSize(550,400);
+		setSize(522,349);
 		setResizable(false);
 		setBackground(new Color(254, 248, 249));
 		setLocationRelativeTo(null);	
@@ -78,28 +66,21 @@ public class LoginForm extends AuthService {
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		getContentPane().setLayout(null);
-		
-		JTextArea txtUsername = new JTextArea();
-		txtUsername.setToolTipText("Enter username"); 
-		 
-		setComponent(txtUsername);
-		padding(9,5,5,15);
-		bounds(117, 111, 300, 34);
-		
-		getContentPane().add(txtUsername);
+		getContentPane().setLayout(null); 
 		
 		JLabel lblPassword = new JLabel("Username");
-		lblPassword.setBounds(117, 91, 82, 16);
+		lblPassword.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		lblPassword.setBounds(40, 72, 108, 49);
 		getContentPane().add(lblPassword);
 		
 		JLabel lblPassword_2 = new JLabel("Password");
-		lblPassword_2.setBounds(117, 167, 82, 16);
+		lblPassword_2.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		lblPassword_2.setBounds(40, 145, 121, 28);
 		getContentPane().add(lblPassword_2);
 		
 
 		txtPassword = new JPasswordField();
-		txtPassword.setBounds(117, 180, 300, 40);
+		txtPassword.setBounds(147, 133, 337, 50);
 		getContentPane().add(txtPassword);
 		
 		
@@ -108,23 +89,15 @@ public class LoginForm extends AuthService {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			 int isEmployee =	loginUser(txtUsername.getText(),txtPassword);
+			 	loginUser(txtUsername.getText(),txtPassword);
 			 
-			 FormHelper form = new FormHelper(); 
-			 form.hideActiveFrame(); 
 			 
-			 if(isEmployee == 2) {
-				
-				 FormHelper.show(new DashboardEmp(),true);
-			 }else if(isEmployee ==1) {
-				 FormHelper.show(new DashboardHr(),true);
-			 }else {
-				 alert.setMessage("We could not found any details from your entry. Please try again!");
-			 }
+			 
+			
 			 
 			}
 		});
-		btnLogin.setBounds(117, 237, 300, 42);
+		btnLogin.setBounds(40, 229, 444, 64);
 		getContentPane().add(btnLogin);
 		
 		 
@@ -134,6 +107,17 @@ public class LoginForm extends AuthService {
 		getContentPane().add(imageBanner);
 		
 		asset.loadImage(imageBanner, "login-banner.png", 300, 200);
+		
+		JLabel lblNewLabel_1 = new JLabel("User Login");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Noto Sans Tagalog", Font.PLAIN, 24));
+		lblNewLabel_1.setBounds(94, 16, 337, 44);
+		getContentPane().add(lblNewLabel_1);
+		
+		txtUsername = new JTextField();
+		txtUsername.setBounds(147, 72, 337, 55);
+		getContentPane().add(txtUsername);
+		txtUsername.setColumns(10);
 		
 		 
 	}

@@ -23,20 +23,34 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class frmUser extends Base {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtName;
-	private JTextField txtEmail;
+	public JTextField txtName;
+	public JTextField txtEmail;
+	
+	
+	
+	private Database DB; 
+	
+	private Object toUpdateId;
+	private JPasswordField txtPassword;
 	
 	private UserService us;
 	private String frmState;
-	private Database DB;
-	private Alert alert;
 	
-	private Object toUpdateId;
+	public String getFrmState() {
+		return frmState;
+	}
+
+	public void setFrmState(String frmState) {
+		this.frmState = frmState;
+	}
+
+	
 
 	/**
 	 * Launch the application.
@@ -50,10 +64,12 @@ public class frmUser extends Base {
 		this.toUpdateId = toUpdateId;
 	}
 	  
-	public frmUser(String title, String state, UserService ps) {
+	public frmUser(String title, String state, UserService us) {
+		
+		this.setFrmState(state);
+		
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 478, 330);
+		setBounds(100, 100, 478, 387);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,7 +107,7 @@ public class frmUser extends Base {
 		lblNewLabel_1_1.setBounds(50, 134, 61, 16);
 		contentPane.add(lblNewLabel_1_1);
 		
-		 String[] items = {"- select - ", "Empoyee", "HR"};
+		 String[] items = {"- select - ", "HR", "Employee"};
 		JComboBox<String> txtRole = new JComboBox<>(items);
 		txtRole.setPreferredSize(new Dimension(342, 39)); // width, height
 		txtRole.setBounds(118, 164, 342, 39);
@@ -104,16 +120,58 @@ public class frmUser extends Base {
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 226, 500, 23);
+		separator.setBounds(0, 261, 500, 23);
 		contentPane.add(separator);
 		
-		JButton btnNewButton = new JButton("SAVE");
+		JButton btnNewButton = new JButton(state);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				int role = txtRole.getSelectedIndex();
+				
+				switch (frmState) {
+				case "SAVE":
+
+					
+					String[] createAr = {
+							txtName.getText(),
+							txtEmail.getText(),
+							String.valueOf(role),
+							txtPassword.getText()							
+							
+					};
+					
+					us.create(createAr);
+					 
+					frmState = null;
+					break;
+				case "UPDATE":
+					String[] updateAr = {
+							txtName.getText(),
+							txtEmail.getText(),
+							String.valueOf(role),
+							txtPassword.getText()
+					};
+					 
+					us.update(updateAr,us.getSelectedId());
+					 
+					frmState = null;
+					break;
+				case "DELETE":
+					 
+					 
+					us.delete(us.getSelectedId());
+					 
+					frmState = null;
+					break;
+
+				default:
+
+			}
+			setVisible(false);
 			}
 		});
-		btnNewButton.setBounds(343, 248, 117, 39);
+		btnNewButton.setBounds(343, 296, 117, 39);
 		contentPane.add(btnNewButton);
 		
 		JButton btnCancel = new JButton("CANCEL");
@@ -122,7 +180,15 @@ public class frmUser extends Base {
 				setVisible(false);
 			}
 		});
-		btnCancel.setBounds(214, 248, 117, 39);
+		btnCancel.setBounds(214, 296, 117, 39);
 		contentPane.add(btnCancel);
+		
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(118, 206, 342, 34);
+		contentPane.add(txtPassword);
+		
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("PASSWORD");
+		lblNewLabel_1_1_1_1.setBounds(50, 215, 61, 16);
+		contentPane.add(lblNewLabel_1_1_1_1);
 	}
 }

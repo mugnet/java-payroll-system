@@ -19,8 +19,17 @@ public class UserService extends TableHelper {
 	private String name;
 	private String email;
 	private String userType;
+	private String password;
 	
 	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	private final String db_table = "users";
 
@@ -104,8 +113,13 @@ public class UserService extends TableHelper {
 		
 		try {
 			DB = new Database();
-			PreparedStatement statement = DB.create("INSERT INTO " + this.db_table + " (name,email,user_type_id,created_at) VALUES (?)", fields);
-
+			PreparedStatement statement = DB.query("INSERT INTO " + this.db_table + " (name,email,user_type_id,password) VALUES (?,?,?,?)");
+			
+			statement.setString( 1, fields[0]);
+			statement.setString( 2, fields[1]);
+			statement.setInt( 3,  Integer.parseInt(fields[2]));
+			statement.setString(4, fields[3]);
+			
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
 				alert.setMessage("A new record has been inserted successfully.");
@@ -128,7 +142,7 @@ public class UserService extends TableHelper {
 			
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 			DB = new Database();
-			PreparedStatement statement = DB.update("UPDATE " + this.db_table + " SET name = ?, email = ?, user_type_id = ?, created_at = ? WHERE id = ?", fields,
+			PreparedStatement statement = DB.update("UPDATE " + this.db_table + " SET name = ?, email = ?, user_type_id  = ? WHERE id = ?", fields,
 					idToUpdate);
 			int i;
 			for(i = 0; i<=fields.length -1; i++) {

@@ -15,6 +15,18 @@ public class DeductionService extends TableHelper {
 	private Database DB;
 	private Alert alert;
 	private String name;
+	private Double amount;
+
+	
+	 
+	
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
 
 	
 	 
@@ -29,7 +41,7 @@ public class DeductionService extends TableHelper {
 
 	private final String db_table = "deductions";
 
-	private String[] headers = { "#", "Name", "Created At", "Updated At" };
+	private String[] headers = { "#", "Name","Amount", "Created At", "Updated At" };
 
 	public DeductionService() {
 		
@@ -51,6 +63,7 @@ public class DeductionService extends TableHelper {
 				 getModel().addRow(new Object[] {
 						resultSet.getString("id"),
 						resultSet.getString("name"),
+						resultSet.getString("amount"),
 						resultSet.getString("created_at"),
 						resultSet.getString("updated_at")
 				});
@@ -81,6 +94,7 @@ public class DeductionService extends TableHelper {
  			
 			 if (resultSet.next()) { 
 	            this.setName(resultSet.getString("name")); 
+	            this.setAmount(resultSet.getDouble("amount")); 
 	         } else {
 	            alert.setMessage("No data is found!");
 	            alert.danger();
@@ -105,7 +119,10 @@ public class DeductionService extends TableHelper {
 		
 		try {
 			DB = new Database();
-			PreparedStatement statement = DB.create("INSERT INTO " + this.db_table + " (name) VALUES (?)", fields);
+			PreparedStatement statement = DB.query("INSERT INTO " + this.db_table + " (name,amount) VALUES (?,?)", fields);
+			
+			statement.setString(1, name);
+			statement.setDouble(2, amount);
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {

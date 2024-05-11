@@ -9,13 +9,29 @@ import javax.swing.JPasswordField;
 
 import payroll_system.Alert;
 import payroll_system.Database;
-
+import payroll_system.FormHelper;
+import payroll_system.TextHelper;
+import payroll_system.views.employee.DashboardEmployee;
+import payroll_system.views.hr.DashboardHr;
+import payroll_system.views.employee.DashboardEmployee;
 public class AuthService extends Database {
 
+public int currentUserId;
 	
 	
-public int loginUser(String email,JPasswordField userPassword) { 
+public int getCurrentUserId() {
+	return currentUserId;
+}
 
+
+public void setCurrentUserId(int currentUserId) {
+	this.currentUserId = currentUserId;
+}
+
+
+public void loginUser(String email,JPasswordField userPassword) { 
+	
+	Alert alert = new Alert();
 	
 	char[] passwordChars = userPassword.getPassword();
     String password = new String(passwordChars);
@@ -30,31 +46,39 @@ public int loginUser(String email,JPasswordField userPassword) {
 
       
      if (resultSet.next()) {
-//    	 while (response.next()) { 
-//             int id = response.getInt("id");
-//             String name = response.getString("name"); 
-//             System.out.println("ID: " + id + ", Name: " + name);
-//         }
-//    	 
-     
+ 
     	 
-    	return resultSet.getInt("user_type_id");
+    	 this.setCurrentUserId(resultSet.getInt("id"));
+    	 
+    	  
+    	 FormHelper form = new FormHelper(); 
+		 form.hideActiveFrame(); 
+		 
+		 if(resultSet.getInt("user_type_id") == 2) {
+			
+			 FormHelper.show(new DashboardEmployee(resultSet.getInt("id")),true);
+			 
+		 }else if(resultSet.getInt("user_type_id") ==1) {
+			 FormHelper.show(new DashboardHr(),true);
+		 }else {
+			 alert.setMessage("We could not found any details from your entry. Please try again!");
+			 
+		 }
+    	 
+    	   
     	 
          
-     } else {
-    	 Alert alert = new Alert();
+     } else { 
  		
  		
- 		alert.setMessage("Invalid username or password. Please try again!");
- 		alert.danger();
+    		alert.setMessage("Invalid username or password. Please try again!");
+     		alert.danger();
  		
- 		dbClose(resultSet, statement);
- 		return 0;
-  
+ 		
          
      }
      
-    
+     dbClose(resultSet, statement); 
     
     
     
@@ -63,7 +87,6 @@ public int loginUser(String email,JPasswordField userPassword) {
 	}catch (SQLException e) {
         e.printStackTrace();
     }   
-	
-	return 0;
+	 
 }
 }

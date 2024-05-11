@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class Database extends Base {
 
@@ -25,7 +26,7 @@ public class Database extends Base {
 			String PASSWORD = config("DB_PASSWORD");
 
 			this.con = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-			System.out.println("Connected to database!");
+//			System.out.println("Connected to database!");
 
 		} catch (SQLException e) {
 			System.err.println("Connection failed!");
@@ -48,7 +49,13 @@ public class Database extends Base {
 		return null;
 
 	}
+	
+	public PreparedStatement select(String sql) {
+		return this.query( "select " + sql);
+	}
 
+	
+	
 	public PreparedStatement query(String sql, String[] fields) {
 
 		try {
@@ -68,8 +75,7 @@ public class Database extends Base {
 
 	}
 
-	public PreparedStatement create(String sql, String[] fields) {
-		// "INSERT INTO your_table_name (column1, column2, column3) VALUES (?, ?, ?)";
+	public PreparedStatement create(String sql, String[] fields) { 
 
 		String insertQuery = sql;
 
@@ -78,7 +84,9 @@ public class Database extends Base {
 			PreparedStatement statement = this.con.prepareStatement(insertQuery);
 
 			for (int i = 0; i <= fields.length - 1; i++) {
+				 
 				statement.setString(i + 1, fields[i]);
+				
 			}
 
 			// Executing the query
@@ -154,6 +162,12 @@ public class Database extends Base {
 	public void dbClose(ResultSet resultSet, PreparedStatement statement) throws SQLException {
 		resultSet.close();
 		statement.close();
+	}
+	
+	public Timestamp timeStamp() {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		
+		return timestamp;
 	}
 
 }

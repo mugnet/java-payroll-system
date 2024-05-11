@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent; 
 
 public class frmPosition extends Base {
 
@@ -36,6 +36,7 @@ public class frmPosition extends Base {
 	private String frmState;
 	private Database DB;
 	private Alert alert;
+	 
 	
 	private Object toUpdateId;
 
@@ -55,9 +56,13 @@ public class frmPosition extends Base {
 	 * Create the frame.
 	 */
 	public frmPosition(String title, String state, PositionService ps) {
-
+		DashboardHr dash = new DashboardHr();
+		dash.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		
 		DB = new Database();
 		alert = new Alert();
+		 
 
 		setTitle(title);
 		this.frmState = state;
@@ -83,7 +88,6 @@ public class frmPosition extends Base {
 		contentPane.add(txtName);
 		txtName.setColumns(10);
 
-		 
 		
 		JButton btnSubmit = new JButton(state);
 		btnSubmit.setText(state);
@@ -107,8 +111,13 @@ public class frmPosition extends Base {
 						};
 						 
 						ps.update(updateAr,ps.getSelectedId());
-						 
+						
+						FormHelper.show(dash, false);
+						FormHelper.show(dash, true);
 						frmState = null;
+						
+					 
+						
 						break;
 					case "DELETE":
 						 
